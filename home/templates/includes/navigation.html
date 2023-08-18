@@ -1,0 +1,115 @@
+{% load bootstrap_icons %}
+<!-- Navbar -->
+
+<div class="navbarbackground w-100 z-index-3 position-absolute">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-3">
+                            <a href="{% url 'index' %}">
+                                <h4>Brand</h4>
+                            </a>
+                        </div>
+                        <div class="col-1"><a href="{% url 'cart' %}"> {% bs_icon 'bag-fill' color='black' size='2em' %}</a></div>
+                    </div>
+                </div>
+
+                
+
+
+            </div>
+
+            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-0 col-md-2 col-lg-3 col-xl-3"></div>
+                        <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                            <span>
+                                <div class="lilsemicircle text-center lilsemicircle1" onclick="openMenu()">
+                                    <div class="text-center">
+                                        {% bs_icon 'list' color='black' size='2em' %}
+                                    </div>
+                                </div>
+                            </span>
+                        </div>
+                        <div class="col-sm-0 col-md-2 col-lg-3 col-xl-3"></div>
+                    </div>
+                </div>
+                <div class="menubutton">
+
+                </div>
+            </div>
+
+            <div class="col-sm-0 col-md-0 col-lg-4 col-xl-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+
+<div class="container-fluid openablemenu">
+    <div class="row">
+        <div class="col-12">
+            <div class="container-fluid menu">
+                <div class="row">
+                    <div style="height: 100px;"></div>
+                    <div class="col-sm-0 col-md-2 col-lg-3 col-xl-3"></div>
+                    <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
+
+                        <div class="lilsemicircle text-center lilsemicircle2" onclick="closeMenu()"
+                            style="z-index: 4; background-color: #808080;">
+                            <div class="text-center">
+                                {% bs_icon 'x' color='black' size='2em' %}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-0 col-md-2 col-lg-3 col-xl-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <h3 style="color: #222222;">Kategoriler</h3>
+                    </div>
+                    <div class="col-6 text-center">
+                        <h3 style="color: #222222;">Diğer</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div style="height: 20px;"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <a href="{% url 'productlist' category_slug='tshirt' %}">
+                            <h5>T-shirt</h5>
+                        </a><br>
+                        <a href="{% url 'productlist' category_slug='shirt' %}">
+                            <h5>Shirt</h5>
+                        </a><br>
+                        <a href="{% url 'productlist' category_slug='hoodie' %}">
+                            <h5>Hoodie</h5>
+                        </a><br>
+                    </div>
+                    <div class="col-6 text-center">
+                        <a href="{% url 'contact' %}">
+                            <h5>İletişim</h5>
+                        </a><br>
+                        <a href="{% url 'aboutUs' %}">
+                            <h5>Hakkımızda</h5>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="bigsemicircle"></div>
+        </div>
+    </div>
+</div>

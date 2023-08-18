@@ -1,0 +1,163 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block extrastyle %}
+
+<style>
+    .background {
+        background-color: #f0ede5;
+    }
+
+    .backgrounda {
+        background-image: url("{% static 'img/background/abcdef.jpg'  %}");
+        background-size: cover;
+        height: 100px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 39px 1px rgba(0, 0, 0, 0.54);
+    }
+
+    .productcardbackground {
+        background-color: #e7e7e7;
+        border-radius: 10px;
+        box-shadow: 5px 5px 39px 1px rgba(0, 0, 0, 0.54);
+        height: auto;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="background">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div style="height: 100px;"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-0 col-md-0 col-lg-2 col-xl-2"></div>
+
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+
+                <div class="row">
+                    <div class="backgrounda"></div>
+                </div>
+
+                <div class="row">
+                    <div style="height: 40px;"></div>
+                </div>
+
+                <div class="productcardbackground">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div style="height: 20px;"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 text-center">
+
+                                <h3>{{productdetail.Name}}</h3>
+
+                            </div>
+
+
+                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6"></div>
+
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+
+                                <img class="product-image" src="{{ productdetail.image.url }}" alt="{{ productdetail.Name }}">
+
+                            </div>
+
+
+                            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+
+                                {% if productdetail.Price == productdetail.SalePrice %}
+
+                                <h5>{{productdetail.Price}}  &#8378;</h5>
+                                {% else %}
+
+                                <h5><strike style="color: red;">{{productdetail.Price}}  &#8378;</strike> {{productdetail.SalePrice}}  &#8378;</h5>
+                                {% endif %}
+
+                                <br>
+
+                                <form id="add-to-cart-form" method="post" action="{% url 'add_to_cart' productdetail.id %}">
+                                    {% csrf_token %}
+                                    <label for="size">Beden:</label>
+                                    <select id="size" name="size">
+                                        <option value="X-Small">X-Small</option>
+                                        <option value="Small">Small</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Large">Large</option>
+                                        <option value="X-Large">X-Large</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <input type="number" name="quantity" step="1" value="1" min="1" max="1" required>
+                                    <br><br>
+                                    <button type="submit" class="btn btn-secondary">Sepete Ekle</button>
+                                </form>
+
+                                <br><br>
+
+                                <h5>{{productdetail.Descriptions}}</h5>
+
+                            </div>
+
+                            <div class="row">
+                                <div style="height: 50px;"></div>
+                            </div>
+                            <div class="row">
+                                <div style="height: 20px;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-0 col-md-0 col-lg-2 col-xl-2"></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+    document.getElementById("add-to-cart-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const url = event.target.getAttribute("action");
+        fetch(url, {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Ürün sepete eklendi!");
+            } else {
+                alert("Ürün sepete eklenirken bir hata oluştu.");
+            }
+        })
+        .catch(error => {
+            console.error("Hata:", error);
+        });
+    });
+</script>
+
+
+{% endblock %}

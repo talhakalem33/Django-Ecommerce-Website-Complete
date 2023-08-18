@@ -1,0 +1,108 @@
+{% extends 'layouts/base.html' %}
+{% load static %} 
+
+{% block extrastyle %}
+<style>
+    .background {
+        background-color: #f0ede5;
+    }
+
+    .cartbackground {
+        background-color: #e7e7e7;
+        border-radius: 10px;
+        box-shadow: 5px 5px 39px 1px rgba(0, 0, 0, 0.54);
+        padding: 20px;
+    }
+
+    .backgrounda {
+        background-image: url("{% static 'img/background/abcdefgi.jpg' %}");
+        background-size: cover;
+        height: 100%;
+        border-radius: 10px;
+        box-shadow: 5px 5px 39px 1px rgba(0, 0, 0, 0.54);
+    }
+
+    .product-image {
+        max-width: 100px;
+        max-height: 100px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="background">
+    <div class="container-fluid">
+        <div class="row">
+            <div style="height: 100px;"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-0 col-md-0 col-lg-1 col-xl-1">
+                <div class="backgrounda"></div>
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-10 col-xl-10">
+                <div class="cartbackground">
+                    <div class="container-fluid">
+                        {% for cart_item in cart_items %}
+                        <div class="row">
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                <a href="{% url 'product' cart_item.product.slug %}">
+                                    <img class="product-image" src="{{ cart_item.product.image.url }}"
+                                        alt="{{ cart_item.product.Name }}">
+                                </a>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                <a href="{% url 'product' slug=cart_item.product.slug %}">
+                                    <br>
+                                    <h5>{{ cart_item.product.Name }}</h5><br>
+                                    {% if cart_item.product.Price == cart_item.product.SalePrice %}
+                                    <h6>{{ cart_item.product.SalePrice }}&#8378;</h6>
+                                    {% else %}
+                                    <h6><strike style="color: red;">{{ cart_item.product.Price }}&#8378;</strike> {{ cart_item.product.SalePrice }}&#8378;</h6>
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                <br>
+                                <h5>Beden: {{ cart_item.size }}</h5><br>
+                                <form method="post" action="{% url 'remove_from_cart' cart_item.product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Sepetten Çıkar</button>
+                                </form>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="row">
+                            <div style="height: 20px;"></div>
+                        </div>
+
+                        <div class="row">
+                            {% if shipping_fee == 30 %}
+                            <h5>Kargo Ücreti: +{{ shipping_fee }}&#8378;</h5>
+                            {%else%}
+                            <h5>Kargo Ücreti: + <strike style="color: red;">30&#8378;</strike> 0&#8378;</h5>
+                            {%endif%}
+                        </div>
+
+                        <div class="row">
+                            <h5>Toplam Fiyat: {{ total_price }}&#8378;</h5>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button type="button" class="btn btn-success">Alışverişi Tamamla</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-0 col-md-0 col-lg-1 col-xl-1">
+                <div class="backgrounda"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

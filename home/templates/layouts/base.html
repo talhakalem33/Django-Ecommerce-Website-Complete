@@ -1,0 +1,46 @@
+{% load static %}
+{% load bootstrap_icons %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>
+  {% block title %}{% endblock title %}
+</title>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+
+<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<link id="pagestyle" href="{% static 'css/material-kit.css' %}" rel="stylesheet" />
+<link id="pagestyle" href="{% static 'css/style.css' %}" rel="stylesheet" />
+{% block extrastyle %}{% endblock extrastyle %}
+</head>
+
+<body {% block body %}{% endblock body %} >
+
+  {% block header %}
+
+    {% include 'includes/navigation.html' %}
+
+  {% endblock header %}
+
+
+
+    {% block content %}{% endblock content %}
+
+
+  {% block footer %}
+  
+    {% include 'includes/footer.html' %}
+
+  {% endblock footer %}
+
+  {% include 'includes/scripts.html' %}
+
+  {% block javascripts %}{% endblock javascripts %}
+
+  <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

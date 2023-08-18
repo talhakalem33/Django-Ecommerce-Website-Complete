@@ -1,0 +1,175 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block extrastyle %}
+<style>
+    .background {
+        background-color: #f0ede5;
+    }
+
+    .rightbackground {
+        background-image: url("{% static 'img/background/abcdef.jpg'  %}");
+        background-size: cover;
+        height: 100%;
+        box-shadow: 5px 5px 75px 1px #000;
+        border-radius: 10px;
+    }
+
+    .filterdiv {
+        background-color: whitesmoke;
+        height: auto;
+        box-shadow: 5px 5px 75px 1px #000;
+        border-radius: 10px;
+    }
+
+    .elements {
+        background-color: whitesmoke;
+        border-radius: 5px;
+        box-shadow: 5px 5px 32px 1px #292929;
+        transition: box-shadow 5s ease 0s;
+    }
+
+    .elements:hover {
+        box-shadow: 5px 5px 32px 1px #292929 inset;
+    }
+</style>
+
+
+{% endblock %}
+
+{% block content %}
+<div class="background">
+    <div class="container-fluid">
+        <div class="row">
+            <div style="height: 100px;"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-0 col-md-0 col-lg-0 col-xl-0"></div>
+            <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3">
+                <div class="filterdiv">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div style="height: 20px;"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="text-center">
+                                <h3>Kategoriler</h3>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <a href="{% url 'productlist' category_slug='tshirt' %}">
+                                <div class="elements text-center">
+                                    <div style="height: 1px;"></div>
+                                    <h5>T-shirt</h5>
+                                    <div style="height: 1px;"></div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="row">
+                            <div style="height: 20px;"></div>
+                        </div>
+
+                        <div class="row">
+                            <a href="{% url 'productlist' category_slug='shirt' %}">
+                                <div class="elements text-center">
+                                    <div style="height: 1px;"></div>
+                                    <h5>Shirt</h5>
+                                    <div style="height: 1px;"></div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="row">
+                            <div style="height: 20px;"></div>
+                        </div>
+
+                        <div class="row">
+                            <a href="{% url 'productlist' category_slug='hoodie' %}">
+                                <div class="elements text-center">
+                                    <div style="height: 1px;"></div>
+                                    <h5>Hoodie</h5>
+                                    <div style="height: 1px;"></div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="row">
+                            <div style="height: 40px;"></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="text-center">
+                                <h3>Fırsatlar</h3>
+                            </div>
+                        </div>
+
+                        {% for campaign in campaigns2 %}
+                        <div class="row">
+                            <a href="{% url 'campaignproductlist' campaign.slug %}">
+                                <div class="elements text-center">
+                                    <div style="height: 1px;"></div>
+                                    <h5>{{ campaign.Name }}</h5>
+                                    <div style="height: 1px;"></div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="row">
+                            <div style="height: 20px;"></div>
+                        </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                <div class="filterdiv">
+                    <div class="container-fluid">
+                        <div class="row">
+
+
+                            {% for product in products %}
+                            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                <div class="product-card">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <a href="{% url 'product' product.slug %}">
+                                                    <img class="product-image" src="{{ product.image.url }}" alt="{{ product.Name }}">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5 class="text-center">{{ product.Name }}</h5>
+                                                {% if product.Price == product.SalePrice %}
+                                                <h6 class="text-center">{{ product.Price }} &#8378;</h6>
+                                                {% else %}
+                                                <h6 class="text-center"><strike style="color: red;">{{ product.Price }} &#8378;</strike> {{ product.SalePrice }} &#8378;</h6>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-sm-0 col-md-0 col-lg-1 col-xl-1">
+                <div class="rightbackground"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
